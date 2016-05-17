@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,12 @@ public class AppListFragment extends Fragment {
         appListRecycler = (RecyclerView) root.findViewById(R.id.category_list);
         adapter = new AppListAdapter(getActivity());
         appListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if(getResources().getBoolean(R.bool.portrait)) {
+            appListRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }else{
+            appListRecycler.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+            appListRecycler.setHasFixedSize(true);
+        }
         appListRecycler.setAdapter(adapter);
         if (this.appList != null){
             adapter.addAll(appList);

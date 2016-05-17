@@ -2,6 +2,7 @@ package com.grability.test.appstoreg.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
         else
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_home);
-
         Intent intent = getIntent();
         String categoryString = intent.getStringExtra("categories");
         GsonBuilder gsonBuilder = new GsonBuilder();

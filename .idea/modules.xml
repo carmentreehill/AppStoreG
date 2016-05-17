@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GrabilityApp.iml" filepath="$PROJECT_DIR$/GrabilityApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AppStoreG.iml" filepath="$PROJECT_DIR$/AppStoreG.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

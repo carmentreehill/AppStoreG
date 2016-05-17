@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="margin_bottom_summary">10dp</dimen>
     <dimen name="margin_sides_summary">40dp</dimen>
+    <dimen name="shape_card">7dp</dimen>
+    <dimen name="elevation_card">5dp</dimen>
 </resources>

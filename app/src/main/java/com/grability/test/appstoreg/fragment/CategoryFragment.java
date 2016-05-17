@@ -3,6 +3,7 @@ package com.grability.test.appstoreg.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import com.grability.test.appstoreg.adapter.CategoryAdapter;
 import com.grability.test.appstoreg.api.model.Entry;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,12 @@ public class CategoryFragment extends Fragment {
         getActivity().setTitle("Category");
         categoryList = (RecyclerView) root.findViewById(R.id.category_list);
         adapter = new CategoryAdapter(getActivity());
-        categoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if(getResources().getBoolean(R.bool.portrait)) {
+            categoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }else{
+            categoryList.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+            categoryList.setHasFixedSize(true);
+        }
         categoryList.setAdapter(adapter);
         if (this.categories != null){
             adapter.addAll(categories);

@@ -3,4 +3,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Salir</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="mode_offline">"Hi! You are in Offline mode"</string>
+    <string name="ok">"OK"</string>
 </resources>

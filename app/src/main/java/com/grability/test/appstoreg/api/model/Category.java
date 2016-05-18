@@ -3,7 +3,7 @@ package com.grability.test.appstoreg.api.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by carmen on 15/05/16.
+ * Created by Carmen Pérez Hernández on 15/05/16.
  */
 public class Category {
     @SerializedName("attributes")

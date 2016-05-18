@@ -1,6 +1,8 @@
 package com.grability.test.appstoreg.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by carmen on 15/05/16.
+ * Created by Carmen Pérez Hernández on 15/05/16.
  */
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>   {
@@ -25,6 +27,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     List<Entry> categories;
     List<Entry> allCategories;
     private static List<Entry> categoryNotRepeat = new ArrayList<>();
+    ProgressDialog progress;
+    FillAppTask fillAppTask;
 
     public CategoryAdapter(Context context){
         this.context = context;
@@ -54,23 +58,68 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     private void getAppsByCat(String categorySelected){
+        fillAppTask = new FillAppTask(context, categorySelected);
+        fillAppTask.execute((Void) null);
+    }
+
+    public class FillAppTask extends AsyncTask<Void, Void, Boolean> {
+        private Context activity;
+        private String categorySelected;
         List<Entry> appsWithCategory = new ArrayList<>();
-        for (int i = 0; i < this.allCategories.size(); i++) {
-            String category = this.allCategories.get(i).getCategory().getAttributes().getLabel();
-            if (category.equals(categorySelected)){
-                appsWithCategory.add(this.allCategories.get(i));
+
+
+        FillAppTask(Context context, String cat){
+            activity = context;
+            categorySelected = cat;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progress = new ProgressDialog(activity);
+            progress.setMessage("Loading...");
+            progress.setProgressStyle(progress.STYLE_SPINNER);
+            progress.setCancelable(false);
+            progress.show();
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            for (int i = 0; i < allCategories.size(); i++) {
+                String category = allCategories.get(i).getCategory().getAttributes().getLabel();
+                if (category.equals(categorySelected)){
+                    appsWithCategory.add(allCategories.get(i));
+                }
+            }
+
+            return true;
         }
-        if (appsWithCategory!= null){
-            Fragment fragment = AppListFragment.newInstance(appsWithCategory);
-            FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-            fragmentManager
-                    .beginTransaction()
-                    .addToBackStack("2")
-                    .replace(R.id.main_content, fragment)
-                    .commit();
-            fragmentManager.executePendingTransactions();
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (progress != null)
+                progress.dismiss();
+            if (appsWithCategory!= null){
+                callFragmentApps(appsWithCategory);
+            }
+            super.onPostExecute(aBoolean);
         }
+    }
+
+    private void callFragmentApps(List<Entry> appsWithCategory){
+        Fragment fragment = AppListFragment.newInstance(appsWithCategory);
+        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .addToBackStack("2")
+                .replace(R.id.main_content, fragment)
+                .commit();
+        fragmentManager.executePendingTransactions();
     }
 
     /**
@@ -114,8 +163,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
      *
      */
     public class CategoryViewHolder  extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView name;
-        TextView fistLetter;
+        private TextView name;
+        private TextView fistLetter;
         private ItemClickListener clickListener;
 
         public CategoryViewHolder(View itemView) {

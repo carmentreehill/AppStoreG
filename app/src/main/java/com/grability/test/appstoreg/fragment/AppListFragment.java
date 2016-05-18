@@ -17,7 +17,7 @@ import com.grability.test.appstoreg.api.model.Entry;
 import java.util.List;
 
 /**
- * Created by carmen on 16/05/16.
+ * Created by Carmen Pérez Hernández on 16/05/16.
  */
 public class AppListFragment extends Fragment {
     private static List<Entry> appList;

@@ -3,7 +3,7 @@ package com.grability.test.appstoreg.api.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by carmen on 16/05/16.
+ * Created by Carmen Pérez Hernández on 16/05/16.
  */
 public class Image {
     @SerializedName("label")

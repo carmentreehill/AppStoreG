@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by carmen on 15/05/16.
+ * Created by Carmen Pérez Hernández on 15/05/16.
  */
 public class Entry {
     @SerializedName("category")

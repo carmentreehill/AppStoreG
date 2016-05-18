@@ -1,8 +1,15 @@
 package com.grability.test.appstoreg.fragment;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +27,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Created by carmen on 15/05/16.
+ * Created by Carmen Pérez Hernández on 15/05/16.
  */
 public class CategoryFragment extends Fragment {
     private RecyclerView categoryList;
@@ -53,6 +60,21 @@ public class CategoryFragment extends Fragment {
         if (this.categories != null){
             adapter.addAll(categories);
         }
+
+        ConnectivityManager connManager = (ConnectivityManager) getActivity().getSystemService(getActivity().CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mCellphone = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+
+        // Verifica la conectividad de internet para
+        // mostrar mensaje
+
+        if (!mWifi.isConnected() && !mCellphone.isConnected()) {
+            OfflineDialogFragment confirmDialog = OfflineDialogFragment.newInstance(); // En modo offline, muestra un mensaje indicando el modo
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            confirmDialog.show(fragmentManager, "tag");
+        }
+
         return root;
     }
 
@@ -61,6 +83,30 @@ public class CategoryFragment extends Fragment {
         super.onResume();
         if (this.categories != null){
             adapter.addAll(categories);
+        }
+    }
+
+    /**
+     * Fragmento para mostrar el mensaje de modo offline activado+
+     *
+     * @return
+     */
+    public static class OfflineDialogFragment extends DialogFragment {
+        public static OfflineDialogFragment newInstance() {
+            OfflineDialogFragment fragment = new OfflineDialogFragment();
+            return fragment;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.mode_offline)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dismiss();
+                        }
+                    });
+            return builder.create();
         }
     }
 }

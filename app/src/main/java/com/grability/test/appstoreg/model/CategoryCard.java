@@ -1,7 +1,7 @@
 package com.grability.test.appstoreg.model;
 
 /**
- * Created by carmen on 15/05/16.
+ * Created by Carmen Pérez Hernández on 15/05/16.
  */
 public class CategoryCard {
     private String name;

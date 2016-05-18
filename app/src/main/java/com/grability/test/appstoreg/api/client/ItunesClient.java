@@ -18,7 +18,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * Created by carmen on 15/05/16.
+ * Created by Carmen Pérez Hernández on 15/05/16.
  */
 public class ItunesClient {
     private static String URL_TO_ASK = "https://itunes.apple.com/us/rss/topfreeapplications/limit=1/json";

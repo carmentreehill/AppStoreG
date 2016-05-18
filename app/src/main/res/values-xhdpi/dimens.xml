@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_margin_top">20dp</dimen>
+    <dimen name="padding_image">10dp</dimen>
+    <dimen name="height_list">60dp</dimen>
+    <dimen name="margin_list">55dp</dimen>
+    <dimen name="height_number">40dp</dimen>
+    <dimen name="next_divisor">50dp</dimen>
+</resources>

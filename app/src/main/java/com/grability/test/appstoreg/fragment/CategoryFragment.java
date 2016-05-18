@@ -68,9 +68,22 @@ public class CategoryFragment extends Fragment {
 
         // Verifica la conectividad de internet para
         // mostrar mensaje
-
-        if (!mWifi.isConnected() && !mCellphone.isConnected()) {
-            OfflineDialogFragment confirmDialog = OfflineDialogFragment.newInstance(); // En modo offline, muestra un mensaje indicando el modo
+        if (mWifi != null){
+            if (!mWifi.isConnected()){
+                if (mCellphone!=null){
+                    if (!mCellphone.isConnected()){
+                        OfflineDialogFragment confirmDialog = OfflineDialogFragment.newInstance(); // En modo offline, muestra un mensaje indicando el modo
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        confirmDialog.show(fragmentManager, "tag");
+                    }
+                }else{
+                    OfflineDialogFragment confirmDialog = OfflineDialogFragment.newInstance();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    confirmDialog.show(fragmentManager, "tag");
+                }
+            }
+        }else{
+            OfflineDialogFragment confirmDialog = OfflineDialogFragment.newInstance();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             confirmDialog.show(fragmentManager, "tag");
         }
@@ -81,7 +94,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (this.categories != null){
+            if (this.categories != null){
             adapter.addAll(categories);
         }
     }

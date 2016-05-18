@@ -47,13 +47,37 @@ public class SplashActivity extends AppCompatActivity {
 
         // Verifica la conectividad de internet para descargar los datos
         // en caso de tener conexión a internet
-
-        if (mWifi.isConnected() || mCellphone.isConnected()) {
-            task = new GetDataTask(this);
-            task.execute((Void) null);
-        }else{
-            readTask = new ReadTask(this);   //Busca el json en un archivo interno
-            readTask.execute((Void) null);
+        if (mWifi != null){
+            if (mWifi.isConnected()){
+                task = new GetDataTask(this);
+                task.execute((Void) null);
+            }else{
+                if (mCellphone!=null){
+                    if (mCellphone.isConnected()){
+                        task = new GetDataTask(this);
+                        task.execute((Void) null);
+                    }else{
+                        readTask = new ReadTask(this);   //Busca el json en un archivo interno
+                        readTask.execute((Void) null);
+                    }
+                }else{
+                    readTask = new ReadTask(this);
+                    readTask.execute((Void) null);
+                }
+            }
+        } else{
+            if (mCellphone!=null){
+                if (mCellphone.isConnected()){
+                    task = new GetDataTask(this);
+                    task.execute((Void) null);
+                }else{
+                    readTask = new ReadTask(this);
+                    readTask.execute((Void) null);
+                }
+            }else{
+                readTask = new ReadTask(this);
+                readTask.execute((Void) null);
+            }
         }
 
         try {
